@@ -19,10 +19,23 @@ SheetXpert/
 │   ├── build_linux.sh        (binario único con PyInstaller)
 │   ├── requirements.txt
 │   └── assets/
+├── docs/               ← animaciones de terminal del README (SVG) y su generador
 ├── .github/workflows/build.yml   (compila .exe y binario Linux en GitHub)
 ├── LICENSE
 └── README.md
 ```
+
+## Índice
+
+1. [Novedades de la versión 2.0](#novedades-de-la-versión-20)
+2. [Instalación en Windows, paso a paso](#instalación-en-windows-paso-a-paso)
+3. [Instalación en Linux, paso a paso](#instalación-en-linux-paso-a-paso)
+4. [Datos que recoge](#datos-que-recoge) · [Estado de las pruebas](#estado-de-las-pruebas) · [Licencia](#licencia)
+5. [English summary](#english-summary)
+
+> **Sobre las terminales animadas:** son simulaciones ilustrativas (se repiten en bucle). Los comandos y los
+> mensajes de los scripts son los reales, pero los nombres de usuario, rutas, versiones de paquetes, datos del
+> equipo y tiempos son de ejemplo. Cada animación va acompañada de los comandos en texto para que puedas copiarlos.
 
 ---
 
@@ -50,59 +63,284 @@ SheetXpert/
 
 ---
 
-## Windows
+---
 
-Requisitos: Windows 10/11 y [Python 3.8+](https://www.python.org/downloads/) (marca *Add python.exe to PATH*).
+## Instalación en Windows, paso a paso
 
-| Quiero… | Hacer |
-|---|---|
-| Ejecutarlo | doble clic en `windows\run_windows.bat` (instala `fpdf2` la primera vez) |
-| Generar el `.exe` | doble clic en `windows\build_windows.bat` → `windows\dist\SheetXpert.exe` |
-| Línea de comandos | `python SheetXpert.py --cli` · `--json` · `--pdf ficha.pdf` · `--lang en` |
+Hay tres caminos. Elige uno:
+
+| Quiero… | Camino | Necesita Python |
+|---|---|---|
+| Probarlo ya | **A.** Ejecutar desde el código (`run_windows.bat`) | Sí |
+| Un `.exe` que pueda llevar a otros PCs | **B.** Generarlo en tu equipo (`build_windows.bat`) | Sí, solo para compilar |
+| Un `.exe` sin instalar nada | **C.** Compilarlo en GitHub Actions | No |
+
+### Paso 1 · Instalar Python (solo para los caminos A y B)
+
+1. Descarga **Python 3.8 o superior** desde <https://www.python.org/downloads/>.
+2. Ejecuta el instalador y **marca la casilla «Add python.exe to PATH»** antes de pulsar *Install Now*.
+3. Abre una consola (`Win` + `R`, escribe `cmd`, Intro) y comprueba la versión:
+
+```bat
+python --version
+```
+
+Si Windows responde que `python` no se reconoce como comando, reinstala Python marcando la casilla del PATH o prueba con `py -3 --version`
+(los scripts `.bat` usan el lanzador `py` si existe).
+
+### Paso 2 · Descargar y descomprimir
+
+1. Descarga `SheetXpert.zip` y haz clic derecho → **Extraer todo…** (por ejemplo en `Descargas`).
+2. Entra en la carpeta `SheetXpert\windows`. Todo lo que sigue se hace desde ahí.
+
+### Camino A · Ejecutar desde el código
+
+**Con el ratón:** doble clic en `windows\run_windows.bat`. La primera vez instala `fpdf2` (hace falta internet una sola vez);
+después abre la ventana directamente.
+
+**Desde la consola**, que además te deja ver lo que ocurre:
+
+```bat
+cd SheetXpert\windows
+python --version
+run_windows.bat
+```
+
+<p align="center">
+  <img src="docs/terminals/windows-run.svg" width="820" alt="Simulación de terminal: ejecución de run_windows.bat en Windows">
+</p>
+
+> Si la ventana de SheetXpert no aparece, ejecuta `python SheetXpert.py --cli` desde esa misma carpeta: verás el error
+> en la consola en lugar de perderlo.
+
+### Camino B · Generar `SheetXpert.exe`
+
+1. Doble clic en `windows\build_windows.bat` (o ejecútalo desde la consola, como abajo).
+2. Espera entre uno y tres minutos: instala `pyinstaller`, empaqueta el programa y acaba con el mensaje `Done:`.
+3. El resultado queda en `windows\dist\SheetXpert.exe`. Es un único archivo que puedes copiar a cualquier PC con Windows 10/11, sin Python.
+
+```bat
+cd SheetXpert\windows
+build_windows.bat
+```
+
+<p align="center">
+  <img src="docs/terminals/windows-build.svg" width="820" alt="Simulación de terminal: compilación del .exe con build_windows.bat">
+</p>
+
+> **Aviso de SmartScreen:** el `.exe` no está firmado digitalmente, así que Windows puede mostrar «Windows protegió su PC».
+> Pulsa **Más información → Ejecutar de todas formas**. Es normal en ejecutables creados con PyInstaller.
+
+### Camino C · Obtener el `.exe` sin instalar Python (GitHub Actions)
+
+Si el proyecto está en tu repositorio de GitHub:
+
+1. Abre la pestaña **Actions** → **Build binaries** → botón **Run workflow**.
+2. Espera a que el trabajo termine (marca verde).
+3. Entra en esa ejecución y, al final de la página, en **Artifacts**, descarga **SheetXpert-windows**.
+4. Descomprime el ZIP descargado: dentro está `SheetXpert.exe`.
+
+(El workflow también se lanza solo al publicar una etiqueta que empiece por `v`, por ejemplo `v2.0.0`.)
+
+### Uso por línea de comandos
+
+```bat
+python SheetXpert.py --cli                  :: ficha en texto
+python SheetXpert.py --json                 :: datos en JSON
+python SheetXpert.py --pdf ficha.pdf        :: PDF sin abrir ventana
+python SheetXpert.py --lang en              :: forzar idioma (es / en)
+```
+
+<p align="center">
+  <img src="docs/terminals/windows-cli.svg" width="820" alt="Simulación de terminal: SheetXpert en modo consola en Windows">
+</p>
 
 El `.exe` se compila con `--windowed` (sin consola), por lo que las opciones `--cli/--json` no muestran
 salida en él; úsalas con `python SheetXpert.py`.
 
-## Linux
+### Problemas frecuentes en Windows
 
-Requisitos: Python 3.8+ y, para la interfaz gráfica, **tkinter**. Para el PDF: `fpdf2` (lo instalan los scripts).
+| Síntoma | Solución |
+|---|---|
+| `Python 3.8 or newer was not found` | Instala Python y marca *Add python.exe to PATH*; abre una consola nueva. |
+| `Could not install the dependencies` | Comprueba la conexión a internet (solo hace falta la primera vez) y vuelve a ejecutar el `.bat`. |
+| Algún dato sale vacío | Ejecuta `python SheetXpert.py --json` y revisa qué campo falta. |
+| El `.exe` no abre por SmartScreen | *Más información → Ejecutar de todas formas*. |
 
-**Opción A — sin instalar nada:** `cd linux && ./run.sh`
-(crea un entorno virtual local `.venv` la primera vez si falta `fpdf2`).
+---
 
-**Opción B — instalar con icono en el menú de aplicaciones:**
+## Instalación en Linux, paso a paso
+
+Hay tres caminos. Elige uno:
+
+| Quiero… | Camino | Necesita Python |
+|---|---|---|
+| Probarlo sin instalar nada | **A.** `./run.sh` | Sí |
+| Icono en el menú de aplicaciones y comando `sheetxpert` | **B.** `./install.sh` | Lo instala si falta |
+| Un binario único para llevar a otros equipos | **C.** `./build_linux.sh` o GitHub Actions | Solo para compilar |
+
+### Paso 1 · Comprobar los requisitos (caminos A y C)
+
+Hace falta **Python 3.8+** y, para la interfaz gráfica, **tkinter**. El PDF usa `fpdf2` (lo instalan los scripts).
+Si vas a usar el camino B, sáltate este paso: `install.sh` instala lo que falte.
+
 ```bash
-cd linux
-./install.sh            # instalación de usuario (~/.local); pide sudo solo para paquetes del sistema
-sudo ./install.sh --system   # instalación global (/opt + /usr/local/bin)
-sheetxpert              # o búscalo en el menú: «SheetXpert»
-./uninstall.sh          # desinstalar
+python3 --version
+python3 -c 'import tkinter' && echo 'tkinter OK'
 ```
 
-`install.sh` detecta el gestor de paquetes e instala Python + tkinter si faltan:
+Si falta tkinter, instálalo con el gestor de tu distribución:
 
-| Distribución | Gestor | Paquetes |
-|---|---|---|
-| Debian, Ubuntu, Mint, Pop!_OS, Kali… | apt | `python3 python3-venv python3-tk` |
-| Fedora, RHEL, Rocky, Alma, CentOS Stream | dnf / yum | `python3 python3-tkinter` |
-| Arch, Manjaro, EndeavourOS | pacman | `python tk` |
-| openSUSE | zypper | `python3 python3-pip python3-tk` |
-| Alpine | apk | `python3 py3-pip python3-tkinter` |
-| Void | xbps | `python3 python3-tkinter` |
-| Gentoo y otras | — | instala Python con soporte Tk manualmente (`USE=tk`) |
+| Distribución | Comando |
+|---|---|
+| Debian, Ubuntu, Mint, Pop!_OS, Kali… | `sudo apt install python3 python3-venv python3-tk` |
+| Fedora, RHEL, Rocky, Alma, CentOS Stream | `sudo dnf install python3 python3-tkinter` |
+| Arch, Manjaro, EndeavourOS | `sudo pacman -S python tk` |
+| openSUSE | `sudo zypper install python3 python3-pip python3-tk` |
+| Alpine | `sudo apk add python3 py3-pip python3-tkinter` |
+| Void | `sudo xbps-install -S python3 python3-tkinter` |
+| Gentoo y otras | instala Python con soporte Tk manualmente (`USE=tk`) |
 
-**Opción C — binario único** (sin Python en el equipo de destino): `./build_linux.sh` → `dist/sheetxpert`.
-Para máxima compatibilidad compílalo en una distro antigua (Ubuntu 22.04 / Debian 11): funcionará en
-esa versión de glibc y en las posteriores. Alternativa: el workflow de GitHub incluido lo compila en
-Ubuntu 22.04 y también el `.exe` de Windows (pestaña *Actions → Build binaries → Run workflow*).
+Sin tkinter el programa sigue funcionando en modo texto (`--cli`), pero no abre la ventana.
 
-Uso en consola (también en servidores sin pantalla, donde pasa a modo texto automáticamente):
+### Paso 2 · Descargar y descomprimir
+
+```bash
+cd ~/Descargas
+unzip SheetXpert.zip
+cd SheetXpert/linux
+```
+
+Si al ejecutar un script aparece `Permission denied`, dale permiso de ejecución:
+
+```bash
+chmod +x run.sh install.sh uninstall.sh build_linux.sh
+```
+
+### Camino A · Sin instalar nada (`run.sh`)
+
+```bash
+cd SheetXpert/linux
+./run.sh
+```
+
+La primera vez, si falta `fpdf2`, crea un entorno virtual local `.venv` dentro de la carpeta `linux` (hace falta internet una vez).
+Las siguientes ejecuciones abren la ventana al instante. Para borrarlo todo, elimina la carpeta.
+
+<p align="center">
+  <img src="docs/terminals/linux-run.svg" width="820" alt="Simulación de terminal: descomprimir y ejecutar run.sh en Linux">
+</p>
+
+### Camino B · Instalar con icono en el menú (`install.sh`)
+
+**Instalación de usuario** (recomendada; no toca el sistema salvo para instalar paquetes que falten):
+
+```bash
+cd SheetXpert/linux
+./install.sh
+sheetxpert              # o búscalo en el menú de aplicaciones: «SheetXpert»
+```
+
+El instalador detecta el gestor de paquetes (`apt`, `dnf`, `yum`, `zypper`, `pacman`, `apk`, `xbps`), instala Python + venv + tkinter
+si faltan (te pedirá la contraseña de `sudo` solo en ese momento), copia el programa a `~/.local/share/sheetxpert`, crea su entorno virtual
+con `fpdf2` y registra el comando `sheetxpert` y el lanzador del menú.
+
+<p align="center">
+  <img src="docs/terminals/linux-install.svg" width="820" alt="Simulación de terminal: instalación de usuario con install.sh en Ubuntu">
+</p>
+
+> Si al final aparece el aviso de que `~/.local/bin` no está en el PATH, añade esto a tu `~/.bashrc` (o `~/.zshrc`) y abre una terminal nueva:
+> ```bash
+> export PATH="$HOME/.local/bin:$PATH"
+> ```
+
+**Instalación para todos los usuarios** (en `/opt` y `/usr/local/bin`):
+
+```bash
+sudo ./install.sh --system
+```
+
+<p align="center">
+  <img src="docs/terminals/linux-install-system.svg" width="820" alt="Simulación de terminal: instalación global con sudo ./install.sh --system">
+</p>
+
+**Opciones del instalador**
+
+| Opción | Efecto |
+|---|---|
+| `--system` | Instalación global (necesita `sudo`). |
+| `--no-deps` | No toca el gestor de paquetes (tú instalas Python, venv y tkinter). |
+| `-h`, `--help` | Muestra la ayuda. |
+
+**Desinstalar** (usa la misma opción con la que instalaste):
+
+```bash
+./uninstall.sh                 # instalación de usuario
+sudo ./uninstall.sh --system   # instalación global
+```
+
+<p align="center">
+  <img src="docs/terminals/linux-uninstall.svg" width="820" alt="Simulación de terminal: desinstalar SheetXpert con uninstall.sh">
+</p>
+
+### Camino C · Binario único (sin Python en el equipo de destino)
+
+**Compilarlo tú mismo:**
+
+```bash
+cd SheetXpert/linux
+./build_linux.sh
+./dist/sheetxpert --version
+```
+
+El resultado es `linux/dist/sheetxpert`. Para máxima compatibilidad compílalo en una distro antigua (Ubuntu 22.04 / Debian 11): funcionará en
+esa versión de glibc y en las posteriores.
+
+<p align="center">
+  <img src="docs/terminals/linux-build.svg" width="820" alt="Simulación de terminal: compilación del binario con build_linux.sh">
+</p>
+
+**O compilarlo en GitHub Actions** (sin instalar nada en tu equipo):
+
+1. Pestaña **Actions** → **Build binaries** → **Run workflow**.
+2. Cuando acabe, entra en la ejecución y descarga **SheetXpert-linux-x86_64** desde **Artifacts**.
+3. Descomprime el ZIP y dale permiso de ejecución (los artefactos de GitHub no conservan los permisos):
+
+```bash
+unzip SheetXpert-linux-x86_64.zip
+chmod +x sheetxpert
+./sheetxpert
+```
+
+El mismo workflow compila también el `.exe` de Windows y usa Ubuntu 22.04 como base.
+
+### Uso por línea de comandos
+
+También en servidores sin pantalla, donde pasa a modo texto automáticamente:
+
 ```bash
 sheetxpert --cli              # ficha en texto
 sheetxpert --json             # datos en JSON
 sheetxpert --pdf ficha.pdf    # PDF sin abrir ventana
 sheetxpert --lang en          # forzar idioma
 ```
+
+<p align="center">
+  <img src="docs/terminals/linux-cli.svg" width="820" alt="Simulación de terminal: SheetXpert en modo consola en Linux">
+</p>
+
+Si no la has instalado, sustituye `sheetxpert` por `./run.sh` (camino A) o `./dist/sheetxpert` (camino C).
+
+### Problemas frecuentes en Linux
+
+| Síntoma | Solución |
+|---|---|
+| `Permission denied` al ejecutar un `.sh` | `chmod +x *.sh` |
+| `tkinter is not installed` / no abre la ventana | Instala el paquete de tkinter de tu distro (tabla del paso 1). Mientras tanto usa `--cli`. |
+| `The Python 'venv' module is missing` | Debian/Ubuntu: `sudo apt install python3-venv`. |
+| `sheetxpert: command not found` | Añade `~/.local/bin` al PATH (ver camino B) o abre una terminal nueva. |
+| `pip could not install the dependencies` | Revisa tu conexión: `fpdf2` se descarga una vez. |
+| Falta el PDF en `run.sh` | Mensaje `PDF export will be unavailable`: instala `python3-venv` y `python3-pip` y reintenta, o usa `./install.sh`. |
 
 ### Notas sobre Linux
 
@@ -148,12 +386,18 @@ La fuente DejaVu incluida en `assets/fonts` tiene su propia licencia libre (`LIC
 
 ---
 
+---
+
 ## English summary
 
-**Windows:** `windows\run_windows.bat` (run from source) or `windows\build_windows.bat` (builds `SheetXpert.exe`).
-**Linux (any distro):** `cd linux && ./run.sh` (portable) or `./install.sh` (menu entry, auto-installs Python + tkinter
-via apt/dnf/yum/pacman/zypper/apk/xbps); `./build_linux.sh` makes a single binary.
+**Windows** (Python 3.8+ with *Add python.exe to PATH*): unzip, then `windows\run_windows.bat` (run from source) or
+`windows\build_windows.bat` (builds `windows\dist\SheetXpert.exe`); or get the `.exe` from GitHub Actions
+(*Actions → Build binaries → Run workflow → Artifacts*). Unsigned `.exe`: SmartScreen → *More info → Run anyway*.
+**Linux (any distro):** `cd linux && ./run.sh` (portable, no install) or `./install.sh` (menu entry + `sheetxpert` command; installs Python + tkinter
+via apt/dnf/yum/pacman/zypper/apk/xbps; `sudo ./install.sh --system` for all users; `./uninstall.sh` to remove);
+`./build_linux.sh` makes a single binary in `dist/`. If a script says `Permission denied`: `chmod +x *.sh`.
 **Headless:** `sheetxpert --cli | --json | --pdf file.pdf [--lang es|en]`.
+The terminal animations in this README are illustrative simulations; regenerate them with `python3 docs/tools/make_terminals.py`.
 
 Highlights: distro-independent data collection from `/proc` and `/sys`; single-call PowerShell collector on Windows;
 Unicode PDF (DejaVu bundled); live language switch; TXT/JSON export; headless mode. Serial numbers on Linux need
