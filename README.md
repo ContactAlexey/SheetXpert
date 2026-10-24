@@ -103,7 +103,7 @@ winget install --id Git.Git -e
 
 ```bat
 cd %USERPROFILE%\Downloads
-git clone https://github.com/TU_USUARIO/SheetXpert.git
+git clone https://github.com/ContactAlexey/SheetXpert.git
 cd SheetXpert\windows
 ```
 
@@ -257,7 +257,7 @@ git --version
 
 ```bash
 cd ~
-git clone https://github.com/TU_USUARIO/SheetXpert.git
+git clone https://github.com/ContactAlexey/SheetXpert.git
 cd SheetXpert/linux
 ```
 
@@ -462,10 +462,10 @@ La fuente DejaVu incluida en `assets/fonts` tiene su propia licencia libre (`LIC
 
 ## English summary
 
-**Windows** (Python 3.8+ with *Add python.exe to PATH*): `git clone https://github.com/YOUR_USER/SheetXpert.git` (or unzip the ZIP), then `windows\run_windows.bat` (run from source) or
+**Windows** (Python 3.8+ with *Add python.exe to PATH*): `git clone https://github.com/ContactAlexey/SheetXpert.git` (or unzip the ZIP), then `windows\run_windows.bat` (run from source) or
 `windows\build_windows.bat` (builds `windows\dist\SheetXpert.exe`); or get the `.exe` from GitHub Actions
 (*Actions → Build binaries → Run workflow → Artifacts*). Unsigned `.exe`: SmartScreen → *More info → Run anyway*.
-**Linux (any distro):** `git clone https://github.com/YOUR_USER/SheetXpert.git && cd SheetXpert/linux` (or unzip), then `./run.sh` (portable, no install) or `./install.sh` (menu entry + `sheetxpert` command; installs Python + tkinter
+**Linux (any distro):** `git clone https://github.com/ContactAlexey/SheetXpert.git && cd SheetXpert/linux` (or unzip), then `./run.sh` (portable, no install) or `./install.sh` (menu entry + `sheetxpert` command; installs Python + tkinter
 via apt/dnf/yum/pacman/zypper/apk/xbps; `sudo ./install.sh --system` for all users; `./uninstall.sh` to remove);
 `./build_linux.sh` makes a single binary in `dist/`. If a script says `Permission denied`: `chmod +x *.sh`.
 **Headless:** `sheetxpert --cli | --json | --pdf file.pdf [--lang es|en]`.
