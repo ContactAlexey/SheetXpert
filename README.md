@@ -88,9 +88,40 @@ python --version
 Si Windows responde que `python` no se reconoce como comando, reinstala Python marcando la casilla del PATH o prueba con `py -3 --version`
 (los scripts `.bat` usan el lanzador `py` si existe).
 
-### Paso 2 · Descargar y descomprimir
+### Paso 2 · Descargar el proyecto
 
-1. Descarga `SheetXpert.zip` y haz clic derecho → **Extraer todo…** (por ejemplo en `Descargas`).
+**Opción 1 — con `git clone` (recomendada: luego se actualiza con un solo comando)**
+
+1. Instala Git para Windows si no lo tienes: <https://git-scm.com/download/win> (vale con las opciones por defecto), o desde una consola:
+
+```bat
+winget install --id Git.Git -e
+```
+
+2. Cierra y abre la consola de nuevo y comprueba que funciona: `git --version`.
+3. Clona el repositorio en la carpeta donde quieras (por ejemplo `Descargas`) y entra en la versión de Windows:
+
+```bat
+cd %USERPROFILE%\Downloads
+git clone https://github.com/TU_USUARIO/SheetXpert.git
+cd SheetXpert\windows
+```
+
+> Sustituye `TU_USUARIO` por el usuario u organización de GitHub donde esté el repositorio (botón verde **Code** → **HTTPS** → copiar la URL).
+
+<p align="center">
+  <img src="docs/terminals/windows-git.svg" width="820" alt="Simulación de terminal: git clone de SheetXpert en Windows">
+</p>
+
+Para actualizar más adelante, dentro de la carpeta `SheetXpert`:
+
+```bat
+git pull
+```
+
+**Opción 2 — sin Git (ZIP)**
+
+1. Descarga `SheetXpert.zip` (en GitHub: **Code → Download ZIP**) y haz clic derecho → **Extraer todo…** (por ejemplo en `Descargas`).
 2. Entra en la carpeta `SheetXpert\windows`. Todo lo que sigue se hace desde ahí.
 
 ### Camino A · Ejecutar desde el código
@@ -203,7 +234,48 @@ Si falta tkinter, instálalo con el gestor de tu distribución:
 
 Sin tkinter el programa sigue funcionando en modo texto (`--cli`), pero no abre la ventana.
 
-### Paso 2 · Descargar y descomprimir
+### Paso 2 · Descargar el proyecto
+
+**Opción 1 — con `git clone` (recomendada: luego se actualiza con un solo comando)**
+
+1. Instala Git si no lo tienes y comprueba la versión:
+
+| Distribución | Comando |
+|---|---|
+| Debian, Ubuntu, Mint, Pop!_OS, Kali… | `sudo apt install git` |
+| Fedora, RHEL, Rocky, Alma, CentOS Stream | `sudo dnf install git` |
+| Arch, Manjaro, EndeavourOS | `sudo pacman -S git` |
+| openSUSE | `sudo zypper install git` |
+| Alpine | `sudo apk add git` |
+| Void | `sudo xbps-install -S git` |
+
+```bash
+git --version
+```
+
+2. Clona el repositorio y entra en la versión de Linux:
+
+```bash
+cd ~
+git clone https://github.com/TU_USUARIO/SheetXpert.git
+cd SheetXpert/linux
+```
+
+> Sustituye `TU_USUARIO` por el usuario u organización de GitHub donde esté el repositorio (botón verde **Code** → **HTTPS** → copiar la URL).
+
+<p align="center">
+  <img src="docs/terminals/linux-git.svg" width="820" alt="Simulación de terminal: git clone de SheetXpert en Linux">
+</p>
+
+Los `.sh` conservan su permiso de ejecución al clonar. Para actualizar más adelante, dentro de la carpeta `SheetXpert`:
+
+```bash
+git pull
+```
+
+Si ya habías instalado con `./install.sh`, vuelve a ejecutarlo tras el `git pull` para copiar la versión nueva.
+
+**Opción 2 — sin Git (ZIP)**
 
 ```bash
 cd ~/Descargas
@@ -390,10 +462,10 @@ La fuente DejaVu incluida en `assets/fonts` tiene su propia licencia libre (`LIC
 
 ## English summary
 
-**Windows** (Python 3.8+ with *Add python.exe to PATH*): unzip, then `windows\run_windows.bat` (run from source) or
+**Windows** (Python 3.8+ with *Add python.exe to PATH*): `git clone https://github.com/YOUR_USER/SheetXpert.git` (or unzip the ZIP), then `windows\run_windows.bat` (run from source) or
 `windows\build_windows.bat` (builds `windows\dist\SheetXpert.exe`); or get the `.exe` from GitHub Actions
 (*Actions → Build binaries → Run workflow → Artifacts*). Unsigned `.exe`: SmartScreen → *More info → Run anyway*.
-**Linux (any distro):** `cd linux && ./run.sh` (portable, no install) or `./install.sh` (menu entry + `sheetxpert` command; installs Python + tkinter
+**Linux (any distro):** `git clone https://github.com/YOUR_USER/SheetXpert.git && cd SheetXpert/linux` (or unzip), then `./run.sh` (portable, no install) or `./install.sh` (menu entry + `sheetxpert` command; installs Python + tkinter
 via apt/dnf/yum/pacman/zypper/apk/xbps; `sudo ./install.sh --system` for all users; `./uninstall.sh` to remove);
 `./build_linux.sh` makes a single binary in `dist/`. If a script says `Permission denied`: `chmod +x *.sh`.
 **Headless:** `sheetxpert --cli | --json | --pdf file.pdf [--lang es|en]`.
