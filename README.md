@@ -33,10 +33,6 @@ SheetXpert/
 4. [Datos que recoge](#datos-que-recoge) · [Estado de las pruebas](#estado-de-las-pruebas) · [Licencia](#licencia)
 5. [English summary](#english-summary)
 
-> **Sobre las terminales animadas:** son simulaciones ilustrativas (se repiten en bucle). Los comandos y los
-> mensajes de los scripts son los reales, pero los nombres de usuario, rutas, versiones de paquetes, datos del
-> equipo y tiempos son de ejemplo. Cada animación va acompañada de los comandos en texto para que puedas copiarlos.
-
 ---
 
 ## Novedades de la versión 2.0
@@ -106,8 +102,6 @@ cd %USERPROFILE%\Downloads
 git clone https://github.com/ContactAlexey/SheetXpert.git
 cd SheetXpert\windows
 ```
-
-> Sustituye `TU_USUARIO` por el usuario u organización de GitHub donde esté el repositorio (botón verde **Code** → **HTTPS** → copiar la URL).
 
 <p align="center">
   <img src="docs/terminals/windows-git.svg" width="820" alt="Simulación de terminal: git clone de SheetXpert en Windows">
@@ -260,8 +254,6 @@ cd ~
 git clone https://github.com/ContactAlexey/SheetXpert.git
 cd SheetXpert/linux
 ```
-
-> Sustituye `TU_USUARIO` por el usuario u organización de GitHub donde esté el repositorio (botón verde **Code** → **HTTPS** → copiar la URL).
 
 <p align="center">
   <img src="docs/terminals/linux-git.svg" width="820" alt="Simulación de terminal: git clone de SheetXpert en Linux">
@@ -469,7 +461,6 @@ La fuente DejaVu incluida en `assets/fonts` tiene su propia licencia libre (`LIC
 via apt/dnf/yum/pacman/zypper/apk/xbps; `sudo ./install.sh --system` for all users; `./uninstall.sh` to remove);
 `./build_linux.sh` makes a single binary in `dist/`. If a script says `Permission denied`: `chmod +x *.sh`.
 **Headless:** `sheetxpert --cli | --json | --pdf file.pdf [--lang es|en]`.
-The terminal animations in this README are illustrative simulations; regenerate them with `python3 docs/tools/make_terminals.py`.
 
 Highlights: distro-independent data collection from `/proc` and `/sys`; single-call PowerShell collector on Windows;
 Unicode PDF (DejaVu bundled); live language switch; TXT/JSON export; headless mode. Serial numbers on Linux need
